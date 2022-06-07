@@ -1,0 +1,1 @@
+export type NatureSkill = "Fire" | "Water" | "Earth" | "Air" | "Light" | "Dark" | "Neutral";

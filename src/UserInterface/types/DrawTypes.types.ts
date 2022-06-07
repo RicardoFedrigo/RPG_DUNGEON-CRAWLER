@@ -1,0 +1,1 @@
+export type DrawTypes = string | string[]
