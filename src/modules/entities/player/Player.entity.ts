@@ -1,4 +1,4 @@
-import { EntityAbstract } from "../Entity.abstration";
+import { EntityAbstract } from "../Entity.entity";
 
 export class Player extends EntityAbstract {
     getLife(): number {
