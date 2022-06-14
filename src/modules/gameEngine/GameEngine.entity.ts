@@ -1,21 +1,23 @@
 import { Menu } from "../../UserInterface/Menu.entity";
 import { Render } from "../../UserInterface/Render/Render.entity";
-
-class GameEngine {
+import { GameStateInterface } from "../Game/interfaces/GameState.interface";
+import { GameStates } from "../Game/types/GameStates.type";
+export class GameEngine implements GameStateInterface{
   private gameOver: boolean = false;
-  private menu: Menu = new Menu(new Render());
 
   constructor() {}
+  execute(): void {
+    throw new Error("Method not implemented.");
+  }
+  interaction(key: string): void {
+    throw new Error("Method not implemented.");
+  }
+  getState(): GameStates {
+    throw new Error("Method not implemented.");
+  }
 
   gameMenu() {
-    this.menu.renderMenu();
+
   }
 
-  start() {
-    console.log("GameEngine started");
-  }
-
-  gameLoop() {
-    console.log("Game loop");
-  }
 }

@@ -1,10 +1,7 @@
-import { Console } from "console";
-import { Menu } from "./UserInterface/Menu.entity";
+import { Game } from "./modules/Game/Game.entity";
 import { Render } from "./UserInterface/Render/Render.entity";
 
-const menu = new Menu(new Render());
-
-menu.renderMenu();
+const game = new Game(new Render());
 
 const stdin = process.stdin;
 
@@ -21,11 +18,8 @@ stdin.setEncoding("utf8");
 // on any data into stdin
 stdin.on("data", function (key) {
   // ctrl-c ( end of text )
-  if (key.toString() === '\x03') {
+  if (key.toString() === "\x03") {
     process.exit();
   }
-  menu.selectMenuItem(key.toString())
-
-  if(menu.getRun())
-  process.stdout.write(key);
+  game.interaction(key.toString("utf-8"));
 });

@@ -1,68 +1,58 @@
+import { EventEmitter } from "stream";
+import { GameStateInterface } from "../modules/Game/interfaces/GameState.interface";
+import { GameStates } from "../modules/Game/types/GameStates.type";
 import { RenderInterface } from "./interfaces/Render.interface";
 
-type action = "start" | "end" | null;
+type action = "game" | "quit" | null;
 
-export class Menu {
-  private render: RenderInterface;
-  public static readonly type = "menu";
+export class Menu implements GameStateInterface {
+  public static readonly gameState: GameStates = "menu";
   public static readonly entityName = "Menu";
   private image = "";
 
   private action: action = null;
-  private run: boolean = false;
 
-  constructor(render: RenderInterface) {
-    this.render = render;
+  constructor(private readonly render: RenderInterface, private readonly event:EventEmitter) {
+    
   }
 
-  renderMenu(): void {
-    this.image = `
-        ############################################
-        #              DUNGEON CRAWLER             #
-        #                                          #
-        #                                          #
-        #             ->START                      #
-        #               QUIT                       #
-        #                                          #
-        #                                          #
-        ############################################
-        `;
-    this.render.draw(this.image);
-    this.render.render();
+  getState(): GameStates {
+    return Menu.gameState;
   }
 
-  selectMenuItem(key: string): void {
+  interaction(key: string): void {
     switch (key) {
       case "\x1B[A":
         this.image = `
-        ############################################
-        #              DUNGEON CRAWLER             #
-        #                                          #
-        #                                          #
-        #             ->START                      #
-        #               QUIT                       #
-        #                                          #
-        #                                          #
-        ############################################
+        ╔══════════════════════════════════════════╗
+        ║              DUNGEON CRAWLER             ║
+        ║                                          ║
+        ║                                          ║
+        ║             ⇝ START                      ║
+        ║               QUIT                       ║
+        ║                                          ║
+        ║                                          ║
+        ╚══════════════════════════════════════════╝
         `;
-        this.action = "start";
+        this.action = "game";
         break;
       case "\x1B[B":
         this.image = `
-        ############################################
-        #              DUNGEON CRAWLER             #
-        #                                          #
-        #                                          #
-        #               START                      #
-        #             ->QUIT                       #
-        #                                          #
-        #                                          #
-        ############################################
+        ╔══════════════════════════════════════════╗
+        ║              DUNGEON CRAWLER             ║
+        ║                                          ║
+        ║                                          ║
+        ║               START                      ║
+        ║             ⇝ QUIT                       ║
+        ║                                          ║
+        ║                                          ║
+        ╚══════════════════════════════════════════╝
         `;
-        this.action = "end";
+        this.action = "quit";
         break;
       case "\r":
-        this.run = true;
+        this.event.emit("changeGameState", this.action);
+        break;
       default:
         return; // Quit when this doesn't handle the key event.
     }
@@ -70,11 +60,19 @@ export class Menu {
     this.render.render();
   }
 
-  public getRun(): boolean {
-    return this.run;
-  }
-
-  public getAction(): action {
-    return this.action;
+  execute(): void {
+    this.image = `
+        ╔══════════════════════════════════════════╗
+        ║              DUNGEON CRAWLER             ║
+        ║                                          ║
+        ║                                          ║
+        ║               START                      ║
+        ║             ⇝ QUIT                       ║
+        ║                                          ║
+        ║                                          ║
+        ╚══════════════════════════════════════════╝
+    `;
+    this.render.draw(this.image);
+    this.render.render();
   }
 }

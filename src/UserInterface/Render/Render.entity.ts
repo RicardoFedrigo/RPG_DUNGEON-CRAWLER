@@ -8,6 +8,7 @@ export class Render implements RenderInterface {
   }
 
   render(): void {
+    console.clear();
     this.image.split("\n").forEach((image) => {
       console.log(image);
     });
