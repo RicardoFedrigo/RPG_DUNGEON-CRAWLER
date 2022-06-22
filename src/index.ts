@@ -22,4 +22,9 @@ stdin.on("data", function (key) {
     process.exit();
   }
   game.interaction(key.toString("utf-8"));
+  game.run();
 });
+
+// process.on("uncaughtException", (error) => {
+//   console.log(error);
+// });

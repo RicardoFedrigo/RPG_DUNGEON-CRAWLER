@@ -2,6 +2,7 @@ import { ItemCreateDto } from "./dtos/ItemCreate.dto";
 import { ItemInterface } from "./interface/Item.interface";
 import { actionType } from "./types/action.type";
 import { ItemType } from "./types/ItemType.type";
+import { itensAttributes } from "./types/itensAttributes.type";
 
 export class Items implements ItemInterface {
   protected readonly name: string;
@@ -10,6 +11,7 @@ export class Items implements ItemInterface {
   protected readonly image: string;
   protected readonly weight: number;
   protected readonly type: ItemType;
+  protected readonly attr: itensAttributes 
 
   constructor({
     description,
@@ -18,6 +20,7 @@ export class Items implements ItemInterface {
     price,
     weight,
     type,
+    attr
   }: ItemCreateDto) {
     this.name = name;
     this.description = description;
@@ -25,7 +28,12 @@ export class Items implements ItemInterface {
     this.image = image;
     this.weight = weight;
     this.type = type;
+    this.attr = attr
   }
+  getAttributes(): itensAttributes {
+    return this.attr 
+  }
+
   use(): actionType {
     throw new Error("Method not implemented.");
   }

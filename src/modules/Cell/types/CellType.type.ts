@@ -1,0 +1,1 @@
+export type CellType = "wall" | "ground" | "chest" | "trap" | "begin" | "end" | "player" | null

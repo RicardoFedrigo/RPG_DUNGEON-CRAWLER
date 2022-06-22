@@ -1,34 +1,18 @@
+import { ItemInterface } from "../items/interface/Item.interface";
 import { EntityAbstract } from "../Entity.entity";
 
 export class Player extends EntityAbstract {
-    getLife(): number {
-        return this.life;
-    }
-    getMana(): number {
+    public attack(): number {
         throw new Error("Method not implemented.");
     }
-    setLife(life: number): void {
+    public defend(): number {
         throw new Error("Method not implemented.");
     }
-    setMana(mana: number): void {
+    public reciveDamage(): number {
         throw new Error("Method not implemented.");
     }
-    getName(): string {
+    public useItem(item: ItemInterface): void {
         throw new Error("Method not implemented.");
     }
-    attack(): number {
-        throw new Error("Method not implemented.");
-    }
-    defend(): number {
-        throw new Error("Method not implemented.");
-    }
-    getDamage(): number {
-        throw new Error("Method not implemented.");
-    }
-    getSkill(): number {
-        throw new Error("Method not implemented.");
-    }
-    getLuck(): number {
-        throw new Error("Method not implemented.");
-    }
+
 }
