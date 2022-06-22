@@ -3,6 +3,8 @@ import { GameStateInterface } from "../modules/Game/interfaces/GameState.interfa
 import { GameStates } from "../modules/Game/types/GameStates.type";
 import { KeysEnums } from "../utils/enums/Keys.enums";
 import { RenderInterface } from "./interfaces/Render.interface";
+import { Iterminal } from "../modules/terminal/interfaces/Iterminal"
+import { terminal } from "../modules/terminal/terminal.entity";
 
 type action = "game" | "quit" | null;
 
@@ -18,15 +20,24 @@ export class Menu implements GameStateInterface {
     private readonly event: EventEmitter
   ) {
     this.image = `
-        ╔══════════════════════════════════════════╗
-        ║              DUNGEON CRAWLER             ║
-        ║                                          ║
-        ║                                          ║
-        ║             ⇝ START                      ║
-        ║               QUIT                       ║
-        ║                                          ║
-        ║                                          ║
-        ╚══════════════════════════════════════════╝
+╔════════════════════════════════════════════════════╗
+║                  DUNGEON CRAWLER                   ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                    ⇝ START                         ║
+║                                                    ║
+║                      QUIT                          ║
+║                                                    ║
+║                                                    ║
+║                                                    ║  
+║                                                    ║
+║                                                    ║
+║                                                    ║ 
+║                                                    ║ 
+╚════════════════════════════════════════════════════╝
     `;
   }
 
@@ -38,34 +49,52 @@ export class Menu implements GameStateInterface {
     switch (key) {
       case KeysEnums.ArrowUp:
         this.image = `
-        ╔══════════════════════════════════════════╗
-        ║              DUNGEON CRAWLER             ║
-        ║                                          ║
-        ║                                          ║
-        ║             ⇝ START                      ║
-        ║               QUIT                       ║
-        ║                                          ║
-        ║                                          ║
-        ╚══════════════════════════════════════════╝
+╔════════════════════════════════════════════════════╗
+║                  DUNGEON CRAWLER                   ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                    ⇝ START                         ║
+║                                                    ║
+║                      QUIT                          ║
+║                                                    ║
+║                                                    ║
+║                                                    ║  
+║                                                    ║
+║                                                    ║
+║                                                    ║ 
+║                                                    ║ 
+╚════════════════════════════════════════════════════╝
         `;
         this.action = "game";
         break;
       case KeysEnums.ArrowDown:
         this.image = `
-        ╔══════════════════════════════════════════╗
-        ║              DUNGEON CRAWLER             ║
-        ║                                          ║
-        ║                                          ║
-        ║               START                      ║
-        ║             ⇝ QUIT                       ║
-        ║                                          ║
-        ║                                          ║
-        ╚══════════════════════════════════════════╝
+╔════════════════════════════════════════════════════╗
+║                  DUNGEON CRAWLER                   ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                                                    ║
+║                      START                         ║
+║                                                    ║
+║                    ⇝ QUIT                          ║
+║                                                    ║
+║                                                    ║
+║                                                    ║  
+║                                                    ║
+║                                                    ║
+║                                                    ║ 
+║                                                    ║ 
+╚════════════════════════════════════════════════════╝
         `;
         this.action = "quit";
         break;
       case KeysEnums.Enter:
-        this.event.emit("changeGameState", this.action);
+        this.event.emit("changeGameState", this.action, 1, 1);
         break;
       default:
         return; // Quit when this doesn't handle the key event.
@@ -75,6 +104,7 @@ export class Menu implements GameStateInterface {
   }
 
   execute(): void {
+    terminal.SetCursor(0,0)
     this.render.draw(this.image);
     this.render.render();
   }

@@ -5,6 +5,12 @@ import { Menu } from "../../UserInterface/Menu.entity";
 import { EventEmitter } from "stream";
 import { ICell } from "../Cell/interfaces/ICell";
 import { GameEngine } from "../gameEngine/GameEngine.entity";
+import { terminal } from "../terminal/terminal.entity";
+import { Chest } from "../../UserInterface/Chest.entity";
+import { Enemy } from "../../UserInterface/Enemy.entity";
+
+
+
 
 export class Game {
   private gameState: GameStates = "menu";
@@ -14,9 +20,7 @@ export class Game {
 
   constructor(render: Render) {
     this.render = render;
-
     this.eventEmmiterGameState = new EventEmitter();
-
     this.eventEmmiterGameState.on(
       "changeGameState",
       (gameState: GameStates) => {
@@ -42,6 +46,12 @@ export class Game {
       case "menu":
         this.getMenu();
         break;
+      case "chest":
+        this.getChest();
+        break;
+        case "enemy":
+        this.getEnemy();
+        break;
       default:
         throw new Error("Unknown game state");
     }
@@ -60,6 +70,16 @@ export class Game {
     this.gameState = "menu";
     this.gameInstance = new Menu(this.render, this.eventEmmiterGameState);
   }
+
+  private getChest(): void {
+    this.gameState = "chest";
+    this.gameInstance = new Chest(this.render, this.eventEmmiterGameState);
+  }
+  private getEnemy(): void {
+    this.gameState = "enemy";
+    this.gameInstance = new Enemy(this.render, this.eventEmmiterGameState);
+  }
+
 
   private gameOver(): void {
     this.gameState = "gameOver";

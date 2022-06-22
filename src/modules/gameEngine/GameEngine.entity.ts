@@ -19,10 +19,11 @@ export class GameEngine implements GameStateInterface {
   private mapGenerator: IMap;
   private gameState: GameStates = "game";
   private player: Player;
+  private out = process.stdin;
 
   constructor(
     private readonly render: RenderInterface,
-    private readonly event: EventEmitter
+    private readonly event: EventEmitter,
   ) {
     this.player = new Player({
       life: 10,
@@ -124,6 +125,11 @@ export class GameEngine implements GameStateInterface {
       this.map[playerPosition.x][playerPosition.y].resetType();
       this.map[nextPosition.x][nextPosition.y].setCellType("player");
     }
+    if(this.isChest(playerPosition)){
+      this.event.emit("changeGameState", 'chest');
+    }
+
+    
   }
 
   private playerStatuString(): string {

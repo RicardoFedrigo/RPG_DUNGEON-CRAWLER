@@ -1,1 +1,1 @@
-export type GameStates = "menu" | "game" | "gameOver" | "quit";
+export type GameStates = "menu" | "game" | "gameOver" | "quit"| "chest" | "enemy";
